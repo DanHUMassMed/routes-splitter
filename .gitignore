@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+**/.DS_Store
+~*
+*.log
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+.venev
+**/checkpoints.db*
+freeze.txt
+**/.env
+
+**/redis/redis-stable/
+frontend/public/dynamic/
+frontend/build/
+**/test_output/
+**/dist/
+**/build/
+**/node_modules/
+notebooks/data/
+app_logs/
+
+gunicorn.pid
