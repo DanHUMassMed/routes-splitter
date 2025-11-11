@@ -24,30 +24,29 @@ class OrderService():
         s = self.norm_space.sub(" ", s).strip()
         return s
 
-    def load_orders(self, orders_path: str) -> pd.DataFrame:
-        
-        df = read_table(orders_path).copy()
-        cols = {c.lower().strip(): c for c in df.columns}
+    def _map_name_key(self, orders_df) -> pd.DataFrame:
+        cols = {c.lower().strip(): c for c in orders_df.columns}
 
         # Minimal: Customer Name
         if "customer name" not in cols and "customer_name" not in cols and "name" not in cols:
             raise ValueError("Orders must include a 'Customer Name' column (any case).")
 
         name_c = cols.get("customer name") or cols.get("customer_name") or cols.get("name")
-        df = df.rename(columns={name_c: "customer_name"})
+        orders_df = orders_df.rename(columns={name_c: "customer_name"})
         if "order id" in cols:
-            df = df.rename(columns={cols["order id"]: "order_id"})
+            orders_df = orders_df.rename(columns={cols["order id"]: "order_id"})
         if "notes" in cols:
-            df = df.rename(columns={cols["notes"]: "notes"})
-        if "order_id" not in df.columns:
-            df["order_id"] = ""
-        if "notes" not in df.columns:
-            df["notes"] = ""
+            orders_df = orders_df.rename(columns={cols["notes"]: "notes"})
+        if "order_id" not in orders_df.columns:
+            orders_df["order_id"] = ""
+        if "notes" not in orders_df.columns:
+            orders_df["notes"] = ""
 
-        df["name_key"] = df["customer_name"].apply(self._norm_name)
-        return df
+        orders_df["name_key"] = orders_df["customer_name"].apply(self._norm_name)
+        return orders_df
 
     def customer_details_for_orders(self, orders_df, master_df):
+        orders_df = self._map_name_key(orders_df)
         merged_df = orders_df.merge(
             master_df, # Merge with the full dataframe from DB
             on="name_key",
