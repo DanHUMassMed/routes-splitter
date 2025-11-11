@@ -13,29 +13,22 @@ class StopService():
     def __init__(self, model: StopModel):
         self.model = model
 
-    def persist_stops(self, merged_df, route_id_map):
+    def persist_stops(self, stops_df, route_id_map):
         stops_to_insert = []
-
-        # Vectorized-ish approach: single pass through the dataframe
-        for _, row in merged_df.iterrows():
-            driver_idx = int(row["driver_index"])
-            route_id = route_id_map.get(driver_idx)
+        stop_sequences = {}
+        for _, row in stops_df.iterrows():
+            vehicle_idx = int(row["vehicle_index"])
+            route_id = route_id_map.get(vehicle_idx)
+            stop_sequences[vehicle_idx] = stop_sequences.get(vehicle_idx, 0) + 1
 
             if not route_id:
                 continue  # Skip if no matching route (shouldn’t happen)
 
-            # Safe parsing of numeric fields
-            def safe_int(val):
-                try:
-                    return int(float(val)) if pd.notna(val) else None
-                except (ValueError, TypeError):
-                    return None
-
             stops_to_insert.append({
-                "route_id": route_id,
-                "customer_id": safe_int(row.get("customer_id")),
-                "order_id": safe_int(row.get("order_id")),
-                "notes": row.get("notes"),
+                "route_id": int(route_id),
+                "customer_id": int(row.get("customer_id")),
+                "stop_sequence": int(stop_sequences[vehicle_idx]),
+                "notes": row.get("notes",""),
             })
 
         # Bulk insert all stops at once

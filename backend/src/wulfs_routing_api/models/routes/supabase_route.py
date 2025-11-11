@@ -14,8 +14,8 @@ class SupabaseRoute(RouteModel):
         """
         route_to_insert = {
             "route_date": route_date_str,
-            "driver_index": int(driver_idx),
-            "route_name": f"Deliveries {route_date_str} - Driver {driver_idx + 1}"
+            "vehicle_index": int(vehicle_idx),
+            "route_name": f"Deliveries {route_date_str} - Vehicle {vehicle_idx + 1}"
         }
         """
         try:

@@ -1,5 +1,4 @@
 import base64
-import logging
 import os
 import debugpy
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
@@ -9,7 +8,7 @@ from wulfs_routing_api.tasks.celery_tasks import generate_routing_task
 from wulfs_routing_api.models.supabase_db import supabase
 from pydantic import BaseModel
 from celery.result import AsyncResult
-
+import logging
 logger = logging.getLogger()
 logger.setLevel(os.getenv("LOG_LEVEL", "WARNING").upper())
 
@@ -40,13 +39,28 @@ async def list_routes():
     response = supabase.table('routes').select("*").order('created_at', desc=True).execute()
     return response.data
 
+
+@app.get("/routes/{route_id}", tags=["Routing"])
+async def get_route_details(route_id: int):
+    """Gets all stops and customer details for a specific route."""
+    if not supabase:
+        raise HTTPException(status_code=500, detail="Database not configured")
+    
+    # Fetch stops for the given route_id and join with customer info
+    response = supabase.table('stops').select('*, customers(*)').eq('route_id', route_id).execute()
+    
+    if not response.data:
+        raise HTTPException(status_code=404, detail="Route not found")
+        
+    return response.data
+
 class JobResponse(BaseModel):
     job_id: str
 
 @app.post("/routes/generate", response_model=JobResponse, tags=["Routing"])
 async def generate_routes(
     orders_file: UploadFile = File(...),
-    num_drivers: int = Form(...),
+    num_vehicles: int = Form(...),
     split_mode: str = Form(...),
     route_date_str: str = Form(...),
     hq_lat: float = Form(...),
@@ -61,8 +75,7 @@ async def generate_routes(
 
         task = generate_routing_task.delay(
             orders_file_content_b64=orders_content_b64,
-            orders_file_name=orders_file.filename,
-            num_drivers=num_drivers,
+            num_vehicles=num_vehicles,
             split_mode=split_mode,
             route_date_str=route_date_str,
             hq_lat=hq_lat,

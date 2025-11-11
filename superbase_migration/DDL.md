@@ -20,7 +20,7 @@ create index if not exists customers_location_idx on public.customers using gist
 create table if not exists public.routes (
   id bigint generated always as identity primary key,
   route_date TIMESTAMP not null,
-  driver_index bigint not null,
+  vehicle_index bigint not null,
   route_name text not null,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );

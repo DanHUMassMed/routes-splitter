@@ -1,5 +1,5 @@
 import math
-from typing import Tuple
+from typing import Dict, List, Tuple
 import numpy as np
 from ortools.constraint_solver import routing_enums_pb2
 from ortools.constraint_solver import pywrapcp
@@ -37,7 +37,7 @@ class VRPService():
         
         labels = np.empty(len(df), dtype=int)
         
-        # Assign customers to drivers in a round-robin fashion after sorting by angle
+        # Assign customers to vehicles in a round-robin fashion after sorting by angle
         # This aims for better initial balance and maintains angular contiguity
         for i in range(len(df_sorted)):
             # Use .loc for setting values by index, ensuring original index is preserved
@@ -60,92 +60,229 @@ class VRPService():
 
         return labels
 
+    def build_vehicle_routes_from_labels(self,
+        vehicle_labels: np.ndarray,
+        stops_table: pd.DataFrame,
+        num_vehicles: int,
+        depot_location: Tuple[float, float],
+        lat_column: str = "lat",
+        lon_column: str = "lon",
+    ) -> Dict[int, List[int]]:
+        """
+        Construct per-vehicle route sequences using a greedy nearest-neighbor heuristic.
 
-    def solve_vrp(self, df: pd.DataFrame, num_drivers: int, depot_coords: Tuple[float, float]):
-        logger.debug("Starting OR-Tools VRP solver...")
+        Args:
+            vehicle_labels: np.ndarray
+                Array of length N (number of stops). Each element assigns a stop index to a vehicle (0..num_vehicles-1).
+            stops_table: pd.DataFrame
+                DataFrame containing stop coordinates with columns specified by `lat_column` and `lon_column`.
+            num_vehicles: int
+                Number of vehicles (or routes).
+            depot_location: Tuple[float, float]
+                (latitude, longitude) coordinates for the depot.
+            lat_column: str, default="lat"
+                Name of the latitude column in the stops table.
+            lon_column: str, default="lon"
+                Name of the longitude column in the stops table.
 
-        # 1. Create the data model
-        data = {}
-        # Add depot to the locations
-        locations = [(depot_coords[1], depot_coords[0])] + list(zip(df["lat"], df["lon"])) # (lat, lon)
-        data["locations"] = locations
-        data["num_vehicles"] = num_drivers
-        data["depot"] = 0  # Depot is the first location in the list
+        Returns:
+            Dict[int, List[int]]
+                Dictionary mapping each vehicle index to a list of stop indices
+                representing their route order (greedy nearest-neighbor from depot).
+        """
 
-        # 2. Create the routing index manager
-        manager = pywrapcp.RoutingIndexManager(
-            len(data["locations"]), data["num_vehicles"], data["depot"]
-        )
+        def haversine(coord1: Tuple[float, float], coord2: Tuple[float, float]) -> float:
+            """Compute great-circle distance (km) between two (lat, lon) coordinates."""
+            R = 6371.0  # Earth radius in km
+            lat1, lon1 = map(math.radians, coord1)
+            lat2, lon2 = map(math.radians, coord2)
+            dlat, dlon = lat2 - lat1, lon2 - lon1
+            a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+            return 2 * R * math.asin(math.sqrt(a))
 
-        # 3. Create Routing Model
-        routing = pywrapcp.RoutingModel(manager)
+        # Create lookup for coordinates
+        coords_lookup = {
+            idx: (row[lat_column], row[lon_column])
+            for idx, row in stops_table.reset_index(drop=True).iterrows()
+        }
 
-        # 4. Define distance callback
-        def distance_callback(from_index, to_index):
-            """Returns the distance between the two nodes."""
-            from_node = manager.IndexToNode(from_index)
-            to_node = manager.IndexToNode(to_index)
-            loc1 = data["locations"][from_node]
-            loc2 = data["locations"][to_node]
-            dist_km = self._haversine_distance(loc1[0], loc1[1], loc2[0], loc2[1])
-            return int(dist_km * 1000)
+        def greedy_route(stop_indices: List[int], start_coord: Tuple[float, float]) -> List[int]:
+            """Return a greedy nearest-neighbor sequence for assigned stops."""
+            if not stop_indices:
+                return []
+            unvisited = set(stop_indices)
+            route = []
+            current_coord = start_coord
+            while unvisited:
+                nearest_stop = min(unvisited, key=lambda i: haversine(current_coord, coords_lookup[i]))
+                route.append(nearest_stop)
+                unvisited.remove(nearest_stop)
+                current_coord = coords_lookup[nearest_stop]
+            return route
 
-        transit_callback_index = routing.RegisterTransitCallback(distance_callback)
+        # Build routes per vehicle
+        vehicle_routes = {}
+        for vehicle_id in range(num_vehicles):
+            assigned_stops = [i for i, label in enumerate(vehicle_labels) if label == vehicle_id]
+            vehicle_routes[vehicle_id] = greedy_route(assigned_stops, depot_location)
 
-        # 5. Define cost of each arc
-        routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
+        return vehicle_routes
 
-        # 6. Add Distance constraint (optional, but good for balancing)
-        dimension_name = "Distance"
+    # ---------------------------------------------------------------------
+    # Haversine distance
+    # ---------------------------------------------------------------------
+    def compute_haversine_distance(self, coord1: Tuple[float, float], coord2: Tuple[float, float]) -> float:
+        """Compute great-circle distance (km) between two lat/lon coordinates."""
+        R = 6371.0  # Earth radius in km
+        lat1, lon1 = map(math.radians, coord1)
+        lat2, lon2 = map(math.radians, coord2)
+        dlat, dlon = lat2 - lat1, lon2 - lon1
+        a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
+        return 2 * R * math.asin(math.sqrt(a))
+
+
+    # ---------------------------------------------------------------------
+    # Compute full distance matrix including depot
+    # ---------------------------------------------------------------------
+    def build_distance_matrix(self, stops_table: pd.DataFrame, depot_location: Tuple[float, float]) -> List[List[float]]:
+        """Build distance matrix in km including depot as index 0."""
+        coords = [(row["lat"], row["lon"]) for _, row in stops_table.iterrows()]
+        all_points = [depot_location] + coords
+        return [[self.compute_haversine_distance(a, b) for b in all_points] for a in all_points]
+
+
+    # ---------------------------------------------------------------------
+    # Estimate max route distance dynamically
+    # ---------------------------------------------------------------------
+    def estimate_max_route_distance(self, distance_matrix: List[List[float]], num_vehicles: int, safety_factor: float = 1.3) -> int:
+        """Estimate reasonable maximum route distance per vehicle (meters)."""
+        flat_distances = [d for i, row in enumerate(distance_matrix) for j, d in enumerate(row) if j > i]
+        max_pairwise_km = max(flat_distances)
+        max_distance_m = int(max_pairwise_km * 1000 * (num_vehicles + 1) / num_vehicles * safety_factor)
+        print(f"Estimated max route distance per vehicle: {max_distance_m / 1000:.1f} km")
+        return max_distance_m
+
+
+    # ---------------------------------------------------------------------
+    # Compute per-vehicle capacity dynamically
+    # ---------------------------------------------------------------------
+    def estimate_vehicle_capacity(self, num_stops: int, num_vehicles: int) -> int:
+        """Compute per-vehicle capacity to ensure all vehicles are used."""
+        return math.ceil(num_stops / num_vehicles)
+
+
+    # ---------------------------------------------------------------------
+    # Register distance dimension (max route length & balancing)
+    # ---------------------------------------------------------------------
+    def add_distance_dimension(self, routing: pywrapcp.RoutingModel, transit_callback_index: int, max_distance_m: int) -> None:
+        """Add distance dimension with max per vehicle and global span cost."""
         routing.AddDimension(
             transit_callback_index,
-            0,  # no slack
-            3000,  # vehicle maximum travel distance (arbitrary large number for now)
+            0,  # slack
+            max_distance_m,
             True,  # start cumul to zero
-            dimension_name,
+            "Distance"
         )
-        distance_dimension = routing.GetDimensionOrDie(dimension_name)
-        distance_dimension.SetGlobalSpanCostCoefficient(100) # Encourage balanced distances
+        routing.GetDimensionOrDie("Distance").SetGlobalSpanCostCoefficient(100)
 
-        # 7. Set search parameters
-        search_parameters = pywrapcp.DefaultRoutingSearchParameters()
-        search_parameters.first_solution_strategy = (
-            routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC
+
+    # ---------------------------------------------------------------------
+    # Register capacity dimension (dummy to force all vehicles)
+    # ---------------------------------------------------------------------
+    def add_capacity_dimension(self, routing: pywrapcp.RoutingModel, manager: pywrapcp.RoutingIndexManager,
+                            num_stops: int, num_vehicles: int) -> None:
+        """Add vehicle capacity dimension to force all vehicles to be assigned."""
+        demands = [1] * num_stops  # each stop counts as 1 unit
+        vehicle_capacity = self.estimate_vehicle_capacity(num_stops, num_vehicles)
+
+        def demand_callback(from_index: int) -> int:
+            node = manager.IndexToNode(from_index)
+            if node == 0:  # depot
+                return 0
+            return demands[node - 1]
+
+        demand_callback_index = routing.RegisterUnaryTransitCallback(demand_callback)
+        routing.AddDimensionWithVehicleCapacity(
+            demand_callback_index,
+            0,  # slack
+            [vehicle_capacity] * num_vehicles,
+            True,  # start cumul to zero
+            "Capacity"
         )
-        search_parameters.local_search_metaheuristic = (
-            routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH
-        )
-        search_parameters.time_limit.FromSeconds(5) # Limit search time to 5 seconds
 
-        # 8. Solve the problem
-        solution = routing.SolveWithParameters(search_parameters)
 
-        if not solution:
-            logger.debug("OR-Tools VRP solver failed to find a solution.")
-            # Fallback to sweep if VRP fails
-            labels = self._split_sweep(df, num_drivers, depot_coords)
-            sequences = {i: list(range(len(df))) for i in range(num_drivers)}
-            return labels, sequences
+    # ---------------------------------------------------------------------
+    # Register distance (cost) callback
+    # ---------------------------------------------------------------------
+    def register_distance_callback(self, routing: pywrapcp.RoutingModel, manager: pywrapcp.RoutingIndexManager,
+                                distance_matrix: List[List[float]]) -> int:
+        """Register the distance callback and set as arc cost evaluator."""
+        def distance_callback(from_index: int, to_index: int) -> int:
+            from_node = manager.IndexToNode(from_index)
+            to_node = manager.IndexToNode(to_index)
+            return int(distance_matrix[from_node][to_node] * 1000)  # meters
 
-        # 9. Extract the solution
-        labels = np.zeros(len(df), dtype=int)
-        sequences = {i: [] for i in range(num_drivers)}
+        transit_callback_index = routing.RegisterTransitCallback(distance_callback)
+        routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
+        return transit_callback_index
 
-        for vehicle_id in range(data["num_vehicles"]):
-            index = routing.Start(vehicle_id)
-            route_distance = 0
-            while not routing.IsEnd(index):
-                node_index = manager.IndexToNode(index)
-                if node_index != data["depot"]:
-                    # Assign customer to this driver
-                    # node_index - 1 because depot is at index 0 in locations, but not in df
-                    labels[node_index - 1] = vehicle_id
-                    sequences[vehicle_id].append(node_index - 1)
-                previous_index = index
-                index = solution.Value(routing.NextVar(index))
-                route_distance += routing.GetArcCostForVehicle(previous_index, index, vehicle_id)
-            # Add depot as the last stop for sequencing
-            sequences[vehicle_id].append(data["depot"])
 
-        logger.info("OR-Tools VRP solver found a solution.")
-        return labels, sequences
+    # ---------------------------------------------------------------------
+    # Solve VRP with OR-Tools
+    # ---------------------------------------------------------------------
+    def solve_vrp(self, stops_table: pd.DataFrame, num_vehicles: int,
+                                depot_location: Tuple[float, float]) -> Tuple[np.ndarray, Dict[int, List[int]]]:
+        """Solve multi-vehicle VRP with distance and capacity constraints, fallback to sweep+greedy."""
+        num_stops = len(stops_table)
+        distance_matrix = self.build_distance_matrix(stops_table, depot_location)
+
+        # Manager and routing model
+        manager = pywrapcp.RoutingIndexManager(len(distance_matrix), num_vehicles, 0)
+        routing = pywrapcp.RoutingModel(manager)
+
+        # Register distance callback
+        transit_callback_index = self.register_distance_callback(routing, manager, distance_matrix)
+
+        # Add constraints
+        #max_distance_m = estimate_max_route_distance(distance_matrix, num_vehicles)
+        max_distance_m = int(1e9)  # temporarily unlimited
+        self.add_distance_dimension(routing, transit_callback_index, max_distance_m)
+        self.add_capacity_dimension(routing, manager, num_stops, num_vehicles)
+
+        # Small fixed cost per vehicle to encourage usage
+        for vehicle_id in range(num_vehicles):
+            routing.SetFixedCostOfVehicle(100, vehicle_id)
+
+        # Search parameters
+        search_params = pywrapcp.DefaultRoutingSearchParameters()
+        search_params.first_solution_strategy = routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC
+        search_params.local_search_metaheuristic = routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH
+        search_params.time_limit.seconds = 10
+
+        # Solve
+        print("🧩 Solving VRP with OR-Tools...")
+        solution = routing.SolveWithParameters(search_params)
+
+        # Extract solution
+        if solution:
+            labels = np.full(num_stops, -1, dtype=int)
+            vehicle_routes: Dict[int, List[int]] = {}
+
+            for vehicle_id in range(num_vehicles):
+                index = routing.Start(vehicle_id)
+                route = []
+                while not routing.IsEnd(index):
+                    node = manager.IndexToNode(index)
+                    if node != 0:  # depot
+                        stop_idx = node - 1
+                        route.append(stop_idx)
+                        labels[stop_idx] = vehicle_id
+                    index = solution.Value(routing.NextVar(index))
+                vehicle_routes[vehicle_id] = route
+            return labels, vehicle_routes
+
+        # Fallback
+        print("⚠️ OR-Tools failed — using sweep + greedy fallback...")
+        labels = self._split_sweep(stops_table, num_vehicles, depot_location)
+        vehicle_routes = self.build_vehicle_routes_from_labels(labels, stops_table, num_vehicles, depot_location)
+        return labels, vehicle_routes

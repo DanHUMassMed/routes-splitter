@@ -1,3 +1,4 @@
+import io
 import os
 import pandas as pd
 import tempfile
@@ -16,9 +17,7 @@ def write_table(df: pd.DataFrame, path: str):
         df.to_excel(path, index=False)
     else:
         df.to_csv(path, index=False)
-import os
-import base64
-import tempfile
+
 
 def base64_data_to_temp_file(file_name, file_content_b64, USE_HOME=True):
     """
@@ -39,3 +38,25 @@ def base64_data_to_temp_file(file_name, file_content_b64, USE_HOME=True):
 
     return temp_file_path
 
+
+def load_base64_to_df(base64_content: str) -> pd.DataFrame:
+    """
+    Load a base64-encoded file (CSV, Excel) directly into a DataFrame,
+    detecting if it's text or binary automatically.
+    """
+    decoded_bytes = base64.b64decode(base64_content)
+
+    # Try to decode as UTF-8 (text)
+    try:
+        decoded_str = decoded_bytes.decode('utf-8')
+        buffer = io.StringIO(decoded_str)
+        df = pd.read_csv(buffer)
+        return df
+    except UnicodeDecodeError:
+        # If decoding fails, assume binary (e.g., Excel)
+        buffer = io.BytesIO(decoded_bytes)
+        try:
+            df = pd.read_excel(buffer, sheet_name=0)
+            return df
+        except Exception as e:
+            raise ValueError(f"Cannot determine file type or read file: {e}")

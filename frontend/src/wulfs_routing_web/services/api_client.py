@@ -1,5 +1,5 @@
 import requests
-from constants import API_URL
+from ..constants import API_URL
 
 class APIError(Exception):
     def __init__(self, message, status_code=None, response=None):
