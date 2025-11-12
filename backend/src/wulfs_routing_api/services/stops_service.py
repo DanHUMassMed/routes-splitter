@@ -27,7 +27,7 @@ class StopService():
             stops_to_insert.append({
                 "route_id": int(route_id),
                 "customer_id": int(row.get("customer_id")),
-                "stop_sequence": int(stop_sequences[vehicle_idx]),
+                "sequence": int(stop_sequences[vehicle_idx]),
                 "notes": row.get("notes",""),
             })
 

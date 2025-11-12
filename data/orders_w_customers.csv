@@ -1,70 +1,70 @@
-customer_name_order,order_id,notes,name_key,customer_id,customer_name,address,city,state,zip,location,lon,lat
-Bar Volpe,,,bar volpe,3.0,Bar Volpe,170 W Broadway,Boston,MA,2127,0101000020E6100000A33F34F364C351C0D354AA9F922B4540,-71.0530365,42.3404121
-Fox & The Knife,,,fox the knife,4.0,Fox & The Knife,28 West Broadway ,South Boston,MA,2127,0101000020E61000009EAB521F6DC351C0C2120F289B2B4540,-71.0535353,42.3406725
-Dryft Revere,,,dryft revere,7.0,Dryft Revere,500 Ocean Ave,Revere,MA,2151,0101000020E6100000F414DE8A69BF51C065D9DD4D01354540,-70.9908168,42.4141023
-Bar Mezzana,,,bar mezzana,13.0,Bar Mezzana,360 Harrison Avenue,Boston,MA,2118,0101000020E6100000FD38509610C451C039D0436D1B2C4540,-71.0635124,42.344587
-Black Lamb,,,black lamb,14.0,Black Lamb,571 Tremont Street,Boston,MA,2118,0101000020E610000023A0C211A4C451C05CE7DF2EFB2B4540,-71.072514,42.343603
-Bar Vlaha,,,bar vlaha,16.0,Bar Vlaha,1653 Beacon Street,Brookline,MA,2445,0101000020E61000008DC92C8CBEC851C06FFC3F3D6C2B4540,-71.1366301,42.3392407
-Beacon Hill Hotel,,,beacon hill hotel,395.0,Beacon Hill Hotel,25 Charles Street ,Boston,MA,2114,0101000020E6100000520ABABD24C551C0AB2688BA0F2F4540,-71.0803675,42.3676675
-Dive Bar,,,dive bar,29.0,Dive Bar,100 High Street Place ,Boston,MA,2110,0101000020E61000004D423399BBC751C0F475CF70B9294540,-71.1208251,42.3259717
-Brae Burn Country Club,,,brae burn country club,47.0,Brae Burn Country Club,326 Fuller Street,Newton,MA,2465,0101000020E6100000718797F100CF51C094556C27A52A4540,-71.2344326,42.3331651
-Puritan and Co,,,puritan and co,55.0,Puritan and Co,1166 Cambridge St.,Cambridge,MA,2139,0101000020E6100000CFB5792D32C651C0A9BF5E61C12F4540,-71.0968126,42.373089
-Capers Catering,,,capers catering,61.0,Capers Catering,30R Pine St.,Stoneham,MA,2180,0101000020E6100000F49A68A12EC651C0921914724A3D4540,-71.0965961,42.4788344
-Committee,,,committee,75.0,Committee,54 Nothern Ave,Boston,MA,2210,0101000020E6100000BD6F7CED99C251C055698B6B7C2C4540,-71.040645,42.347547
-Contessa,,,contessa,415.0,Contessa,15 Arlington St ,Boston,MA,2116,0101000020E61000003759FED794C451C0A912656F292D4540,-71.0715847,42.352827
-Cunard Tavern,,,cunard tavern,77.0,Cunard Tavern,24 Orleans St.,East Boston,MA,2114,0101000020E61000005C5DA9C27AC251C03FC3407C052F4540,-71.0387427,42.3673549
-O Ya,,,o ya,81.0,O Ya,9 East,St Boston,MA,2111,0101000020E6100000BE61ECCEA4C351C0A4294C29F92C4540,-71.0569341,42.3513538
-TD Garden,,,td garden,84.0,TD Garden,100 Legends Way,Boston,MA,2114,0101000020E610000009032A77FAC351C009C95DDFE22E4540,-71.0621622,42.3662986
-Desnuda Cocina & Bar,,,desnuda cocina bar,86.0,Desnuda Cocina & Bar,647 Tremont St.,Boston,MA,2118,0101000020E6100000BE1D3C6ED3C451C01ADAA5B2CD2B4540,-71.0754047,42.3422149
-Eastern Standard,,,eastern standard,426.0,Eastern Standard,775 Beacon St ,Boston,MA,2215,0101000020E610000062670A9D57C651C0FF1C8B12992C4540,-71.0990975,42.3484214
-Eataly Boston Pasta Retail,,,eataly boston pasta retail,96.0,Eataly Boston Pasta Retail,800 Boylston ST,Boston,MA,2199,0101000020E6100000704C05CB47C551C0F68B2320702C4540,-71.0825069,42.3471718
-Eataly Boston Terra,,,eataly boston terra,98.0,Eataly Boston Terra,800 Boylston St,Boston,MA,2199,0101000020E6100000704C05CB47C551C0F68B2320702C4540,-71.0825069,42.3471718
-Bistro du Midi,,,bistro du midi,130.0,Bistro du Midi,272 Boylston Street,Boston,MA,2116,0101000020E610000017A9E62876C451C08299A5530D2D4540,-71.0697119,42.3519692
-The Banks Fish House,,,the banks fish house,133.0,The Banks Fish House,406 Stuart St.,Boston,MA,2116,0101000020E61000000AA9914CBDC451C0C84851C2A72C4540,-71.0740539,42.3488696
-Faccia a Faccia,,,faccia a faccia,434.0,Faccia a Faccia,278 Newbury St ,Boston,MA,2116,0101000020E6100000010E46915AC551C0364877C6AD2C4540,-71.0836528,42.3490532
-Little Donkey,,,little donkey,147.0,Little Donkey,505 Massachusetts Ave,Cambridge,MA,2139,0101000020E61000009BADBCE47FC651C083802150A22E4540,-71.101556,42.3643284
-Toro,,,toro,149.0,Toro,1704 Washington St.,Boston,MA,2118,0101000020E6100000FBD40C04DCC451C03C1977DE212B4540,-71.0759287,42.3369711
-Kaia,,,kaia,159.0,Kaia,380 Harrison Ave,Boston,MA,2118,0101000020E6100000A2B030E914C451C0666A12BC212C4540,-71.0637763,42.3447795
-Gigi's,,,gigis,161.0,Gigi's,431 Columbus Avenue,Boston,MA,2116,0101000020E610000021730A97FAC451C03003DF7E0A2C4540,-71.0777948,42.3440703
-Ilona,,,ilona,162.0,Ilona,783 Tremont St.,Boston,MA,2118,0101000020E6100000140BD7FE29C551C074B33F506E2B4540,-71.0806882,42.339304
-Kava,,,kava,163.0,Kava,315 Shawmut Ave,Boston,MA,2118,0101000020E6100000E1AF6E6182C451C0A0353FFED22B4540,-71.0704578,42.3423765
-The Oceanaire Seafood Room Boston,,,the oceanaire seafood room boston,436.0,The Oceanaire Seafood Room Boston,40 Court St ,Boston,MA,2108,0101000020E6100000981B672ECBC351C09C6B98A1F12D4540,-71.0592762,42.3589365
-Lucca Boston North End,,,lucca boston north end,177.0,Lucca Boston North End,226 Hanover St,Boston,MA,2113,0101000020E610000048BB760E8AC351C06808C72C7B2E4540,-71.0553013,42.363134
-Sheraton Boston Hotel,,,sheraton boston hotel,189.0,Sheraton Boston Hotel,39 Dalton Street,Boston,MA,2199,0101000020E6100000414D88145EC551C0FBDA44775A2C4540,-71.0838672,42.3465108
-Merai Bar,,,merai bar,445.0,Merai Bar,14 Harvard St,Brookline,MA,2445,0101000020E6100000115A6A1899C751C039BFBC5BB42A4540,-71.1187192,42.3336291
-Mida EAST BOSTON,,,mida east boston,197.0,Mida East Boston,65 Lewis Street,East Boston,MA,2128,0101000020E61000009765998FB5C251C07541D8840F2F4540,-71.0423316,42.3676611
-Mida Fenway,,,mida fenway,446.0,Mida Fenway,1391 Boylston St ,Boston,MA,2215,0101000020E6100000E65D503A6CC651C02C5217DF062C4540,-71.1003557,42.3439597
-Mida NEWTON,,,mida newton,198.0,Mida -NEWTON,261 Walnut St,Newton,MA,2460,0101000020E610000058BFE32549CD51C0F98788F60C2D4540,-71.2075896,42.3519581
-Monument,,,monument,209.0,Monument,251 Main St.,Charlestown,MA,2129,0101000020E61000007573F1B73DC451C0F6CFD38041304540,-71.066267,42.376999
-Waverly,,,waverly,210.0,Waverly,231 Bunker Hill Street,Charlestown,MA,2129,0101000020E610000059D5DC1B0DC451C05000C5C892304540,-71.0633001,42.3794795
-Moona,,,moona,211.0,Moona,243 Hampshire St,Cambridge,MA,2139,0101000020E6100000C2A1B77878C651C092088D60E32F4540,-71.101103,42.3741265
-Mooncussers,,,mooncussers,214.0,Mooncussers,304 Stuart St.,Boston,MA,2116,0101000020E61000003DE87EF387C451C0BEBB3A6CC72C4540,-71.0707978,42.3498359
-Reelhouse East Boston,,,reelhouse east boston,220.0,Reelhouse EAST BOSTON,6 New St.,E. Boston,MA,2128,0101000020E61000005506C4DACEC251C045DCF703792F4540,-71.0438754,42.3708806
-Neptune Oyster Bar,,,neptune oyster bar,224.0,Neptune Oyster Bar,63 Salem St.,Boston,MA,2113,0101000020E6100000EF6481C094C351C067BAD7497D2E4540,-71.0559541,42.3631985
-Newburyport Fish Market,,,newburyport fish market,225.0,Newburyport Fish Market,75 Water,St. Newburyport,MA,1950,0101000020E61000005B481BA265B751C098350C7ACA674540,-70.8655782,42.8108666
-Nine Restaurant,,,nine restaurant,227.0,Nine Restaurant,9 Park Street,Place Boston,MA,2108,0101000020E6100000B7E56DB603C451C06EA7AD11C12D4540,-71.0627266,42.3574545
-Oak Bistro,,,oak bistro,233.0,Oak Bistro,1287 Cambridge St.,Cambridge,MA,2139,0101000020E610000005F8133A54C651C0EE1A3E33D22F4540,-71.0988908,42.3736023
-Pagu,,,pagu,239.0,Pagu,310 Mass Ave,Cambridge,MA,2139,0101000020E610000094579D8BF5C651C064254113BC214540,-71.1087369,42.2635521
-Pammy's,,,pammys,449.0,Pammy's,928 Massachusetts Ave ,Cambridge,MA,2139,0101000020E61000007396A311FDC651C057EC2FBB272F4540,-71.1091961,42.3684
-Sycamore,,,sycamore,256.0,Sycamore,755 Beacon St.,Newton,MA,2459,0101000020E61000008969954F45CC51C0D074C0BF522A4540,-71.1917304,42.3306503
-Alden & Harlow,,,alden harlow,461.0,Alden & Harlow,40 Brattle St,Cambridge,MA,2138,0101000020E6100000B82FB143C6C751C0DDFD3BECCF2F4540,-71.1214761,42.3735328
-Waypoint,,,waypoint,271.0,Waypoint,1030 Massachusetts Ave,Cambridge,MA,2138,0101000020E61000009D50E33936C751C0410B09185D2F4540,-71.1126847,42.3700285
-Seaport Hotel,,,seaport hotel,274.0,Seaport Hotel,1 Seaport Lane,Boston,MA,2210,0101000020E610000086281543A8C251C0709C6F9FB02C4540,-71.0415199,42.3491401
-Select Oyster Bar,,,select oyster bar,277.0,Select Oyster Bar,50 Gloucester,St. Boston,MA,2115,0101000020E610000075B39A0961C551C01932C3EB9F2C4540,-71.0840477,42.3486304
-Somaek,,,somaek,286.0,Somaek,11 Temple Pl.,Boston,MA,2111,0101000020E610000022B6059502C451C0ADEA9BEA7F2D4540,-71.0626576,42.3554662
-Somerset Club,,,somerset club,287.0,Somerset Club,42 Beacon Street,Boston,MA,2108,0101000020E6100000A14D6958E7C351C02A8D98D9E72D4540,-71.0609952,42.358638
-Spoke Wine Bar,,,spoke wine bar,293.0,Spoke Wine Bar,89 Holland St.,Somerville,MA,2144,0101000020E6100000474AC4A5F4C751C034C813F70E334540,-71.1243071,42.3988942
-Prairie Fire,,,prairie fire,468.0,Prairie Fire,242 Harvard St ,Brookline,MA,2446,0101000020E6100000080A174DC2C751C0D020AA95AE2B4540,-71.1212342,42.3412654
-Steel and Rye,,,steel and rye,469.0,Steel and Rye,95 Eliot St,Milton,MA,2186,0101000020E610000048C49448A2C451C05EC026C68D224540,-71.072405,42.2699516
-Baleia,,,baleia,311.0,Baleia,264 E. Berkeley St.,Boston,MA,2118,0101000020E61000002DE521F804C451C00884E7EFEF2B4540,-71.0628033,42.3432598
-Gufo,,,gufo,312.0,Gufo,660 Cambridge St,Cambridge,MA,2141,0101000020E6100000A5F9635A9BC551C0F35A6496982F4540,-71.087607,42.3718441
-Salty Pig,,,salty pig,313.0,Salty Pig,130 Dartmouth St,Boston.,MA,2116,0101000020E610000012FA997ADDC451C059501894692C4540,-71.076018,42.346972
-SRV,,,srv,314.0,SRV,569 Columbus Ave,Boston,MA,2118,0101000020E610000083BAEDE739C551C0E21291ABA22B4540,-71.0816593,42.3409018
-STK Boston,,,stk boston,321.0,STK Boston,222 Berkeley St.,Boston,MA,2116,0101000020E6100000BA2CCB7CACC451C0038871EDFA2C4540,-71.0730278,42.3514077
-Troquet on South,,,troquet on south,484.0,Troquet on South,107 South St ,Boston,MA,2111,0101000020E61000002BE510CCACC351C00D4460F6FC2C4540,-71.0574217,42.3514698
-Uni,,,uni,331.0,Uni,370 Commonwealth Ave,- Elliot Hotel Boston,MA,2215,0101000020E61000006762BA10ABC551C0FCC56CC9AA2C4540,-71.088566,42.348962
-Viale,,,viale,488.0,Viale,502 Mass Ave,Cambridge,MA,2139,0101000020E61000004BCB48BDA7BF51C04A97FE25A90C4540,-70.994613,42.098912
-Cosmica,,,cosmica,341.0,Cosmica,40 Berkeley St.,Boston,MA,2116,0101000020E61000009C3237DF88C451C0FA9408F9452C4540,-71.070854,42.3458854
-The Beehive,,,the beehive,342.0,The Beehive,541 Tremont St,Boston,MA,2116,0101000020E6100000BCA24A8391C451C079904369142C4540,-71.0713814,42.3443729
-"Wilson Farm, Inc.",,,wilson farm inc,343.0,"Wilson Farm, Inc.",10 Pleasant Street,Lexington,MA,2421,0101000020E610000058A599933CCD51C03A1F9E25C8364540,-71.2068223,42.427983
-Zurito,,,zurito,393.0,Zurito,26 Charles Street,Boston,MA,2114,0101000020E61000002D4FD65E7AC451C0D2EA9A7FAA2D4540,-71.0699689,42.3567657
+customer_name_order,order_id,notes,name_key,customer_id,customer_name,address,city,state,zip,lat,lon
+Bar Volpe,,,bar volpe,3.0,Bar Volpe,170 W Broadway,Boston,MA,2127,42.3404121,-71.0530365
+Fox & The Knife,,,fox the knife,4.0,Fox & The Knife,28 West Broadway ,South Boston,MA,2127,42.3406725,-71.0535353
+Dryft Revere,,,dryft revere,7.0,Dryft Revere,500 Ocean Ave,Revere,MA,2151,42.4141023,-70.9908168
+Bar Mezzana,,,bar mezzana,13.0,Bar Mezzana,360 Harrison Avenue,Boston,MA,2118,42.344587,-71.0635124
+Black Lamb,,,black lamb,14.0,Black Lamb,571 Tremont Street,Boston,MA,2118,42.343603,-71.072514
+Bar Vlaha,,,bar vlaha,16.0,Bar Vlaha,1653 Beacon Street,Brookline,MA,2445,42.3392407,-71.1366301
+Beacon Hill Hotel,,,beacon hill hotel,395.0,Beacon Hill Hotel,25 Charles Street ,Boston,MA,2114,42.3676675,-71.0803675
+Dive Bar,,,dive bar,29.0,Dive Bar,100 High Street Place ,Boston,MA,2110,42.3259717,-71.1208251
+Brae Burn Country Club,,,brae burn country club,47.0,Brae Burn Country Club,326 Fuller Street,Newton,MA,2465,42.3331651,-71.2344326
+Puritan and Co,,,puritan and co,55.0,Puritan and Co,1166 Cambridge St.,Cambridge,MA,2139,42.373089,-71.0968126
+Capers Catering,,,capers catering,61.0,Capers Catering,30R Pine St.,Stoneham,MA,2180,42.4788344,-71.0965961
+Committee,,,committee,75.0,Committee,54 Nothern Ave,Boston,MA,2210,42.347547,-71.040645
+Contessa,,,contessa,415.0,Contessa,15 Arlington St ,Boston,MA,2116,42.352827,-71.0715847
+Cunard Tavern,,,cunard tavern,77.0,Cunard Tavern,24 Orleans St.,East Boston,MA,2114,42.3673549,-71.0387427
+O Ya,,,o ya,81.0,O Ya,9 East,St Boston,MA,2111,42.3513538,-71.0569341
+TD Garden,,,td garden,84.0,TD Garden,100 Legends Way,Boston,MA,2114,42.3662986,-71.0621622
+Desnuda Cocina & Bar,,,desnuda cocina bar,86.0,Desnuda Cocina & Bar,647 Tremont St.,Boston,MA,2118,42.3422149,-71.0754047
+Eastern Standard,,,eastern standard,426.0,Eastern Standard,775 Beacon St ,Boston,MA,2215,42.3484214,-71.0990975
+Eataly Boston Pasta Retail,,,eataly boston pasta retail,96.0,Eataly Boston Pasta Retail,800 Boylston ST,Boston,MA,2199,42.3471718,-71.0825069
+Eataly Boston Terra,,,eataly boston terra,98.0,Eataly Boston Terra,800 Boylston St,Boston,MA,2199,42.3471718,-71.0825069
+Bistro du Midi,,,bistro du midi,130.0,Bistro du Midi,272 Boylston Street,Boston,MA,2116,42.3519692,-71.0697119
+The Banks Fish House,,,the banks fish house,133.0,The Banks Fish House,406 Stuart St.,Boston,MA,2116,42.3488696,-71.0740539
+Faccia a Faccia,,,faccia a faccia,434.0,Faccia a Faccia,278 Newbury St ,Boston,MA,2116,42.3490532,-71.0836528
+Little Donkey,,,little donkey,147.0,Little Donkey,505 Massachusetts Ave,Cambridge,MA,2139,42.3643284,-71.101556
+Toro,,,toro,149.0,Toro,1704 Washington St.,Boston,MA,2118,42.3369711,-71.0759287
+Kaia,,,kaia,159.0,Kaia,380 Harrison Ave,Boston,MA,2118,42.3447795,-71.0637763
+Gigi's,,,gigis,161.0,Gigi's,431 Columbus Avenue,Boston,MA,2116,42.3440703,-71.0777948
+Ilona,,,ilona,162.0,Ilona,783 Tremont St.,Boston,MA,2118,42.339304,-71.0806882
+Kava,,,kava,163.0,Kava,315 Shawmut Ave,Boston,MA,2118,42.3423765,-71.0704578
+The Oceanaire Seafood Room Boston,,,the oceanaire seafood room boston,436.0,The Oceanaire Seafood Room Boston,40 Court St ,Boston,MA,2108,42.3589365,-71.0592762
+Lucca Boston North End,,,lucca boston north end,177.0,Lucca Boston North End,226 Hanover St,Boston,MA,2113,42.363134,-71.0553013
+Sheraton Boston Hotel,,,sheraton boston hotel,189.0,Sheraton Boston Hotel,39 Dalton Street,Boston,MA,2199,42.3465108,-71.0838672
+Merai Bar,,,merai bar,445.0,Merai Bar,14 Harvard St,Brookline,MA,2445,42.3336291,-71.1187192
+Mida EAST BOSTON,,,mida east boston,197.0,Mida East Boston,65 Lewis Street,East Boston,MA,2128,42.3676611,-71.0423316
+Mida Fenway,,,mida fenway,446.0,Mida Fenway,1391 Boylston St ,Boston,MA,2215,42.3439597,-71.1003557
+Mida NEWTON,,,mida newton,198.0,Mida -NEWTON,261 Walnut St,Newton,MA,2460,42.3519581,-71.2075896
+Monument,,,monument,209.0,Monument,251 Main St.,Charlestown,MA,2129,42.376999,-71.066267
+Waverly,,,waverly,210.0,Waverly,231 Bunker Hill Street,Charlestown,MA,2129,42.3794795,-71.0633001
+Moona,,,moona,211.0,Moona,243 Hampshire St,Cambridge,MA,2139,42.3741265,-71.101103
+Mooncussers,,,mooncussers,214.0,Mooncussers,304 Stuart St.,Boston,MA,2116,42.3498359,-71.0707978
+Reelhouse East Boston,,,reelhouse east boston,220.0,Reelhouse EAST BOSTON,6 New St.,E. Boston,MA,2128,42.3708806,-71.0438754
+Neptune Oyster Bar,,,neptune oyster bar,224.0,Neptune Oyster Bar,63 Salem St.,Boston,MA,2113,42.3631985,-71.0559541
+Newburyport Fish Market,,,newburyport fish market,225.0,Newburyport Fish Market,75 Water,St. Newburyport,MA,1950,42.8108666,-70.8655782
+Nine Restaurant,,,nine restaurant,227.0,Nine Restaurant,9 Park Street,Place Boston,MA,2108,42.3574545,-71.0627266
+Oak Bistro,,,oak bistro,233.0,Oak Bistro,1287 Cambridge St.,Cambridge,MA,2139,42.3736023,-71.0988908
+Pagu,,,pagu,239.0,Pagu,310 Mass Ave,Cambridge,MA,2139,42.2635521,-71.1087369
+Pammy's,,,pammys,449.0,Pammy's,928 Massachusetts Ave ,Cambridge,MA,2139,42.3684,-71.1091961
+Sycamore,,,sycamore,256.0,Sycamore,755 Beacon St.,Newton,MA,2459,42.3306503,-71.1917304
+Alden & Harlow,,,alden harlow,461.0,Alden & Harlow,40 Brattle St,Cambridge,MA,2138,42.3735328,-71.1214761
+Waypoint,,,waypoint,271.0,Waypoint,1030 Massachusetts Ave,Cambridge,MA,2138,42.3700285,-71.1126847
+Seaport Hotel,,,seaport hotel,274.0,Seaport Hotel,1 Seaport Lane,Boston,MA,2210,42.3491401,-71.0415199
+Select Oyster Bar,,,select oyster bar,277.0,Select Oyster Bar,50 Gloucester,St. Boston,MA,2115,42.3486304,-71.0840477
+Somaek,,,somaek,286.0,Somaek,11 Temple Pl.,Boston,MA,2111,42.3554662,-71.0626576
+Somerset Club,,,somerset club,287.0,Somerset Club,42 Beacon Street,Boston,MA,2108,42.358638,-71.0609952
+Spoke Wine Bar,,,spoke wine bar,293.0,Spoke Wine Bar,89 Holland St.,Somerville,MA,2144,42.3988942,-71.1243071
+Prairie Fire,,,prairie fire,468.0,Prairie Fire,242 Harvard St ,Brookline,MA,2446,42.3412654,-71.1212342
+Steel and Rye,,,steel and rye,469.0,Steel and Rye,95 Eliot St,Milton,MA,2186,42.2699516,-71.072405
+Baleia,,,baleia,311.0,Baleia,264 E. Berkeley St.,Boston,MA,2118,42.3432598,-71.0628033
+Gufo,,,gufo,312.0,Gufo,660 Cambridge St,Cambridge,MA,2141,42.3718441,-71.087607
+Salty Pig,,,salty pig,313.0,Salty Pig,130 Dartmouth St,Boston.,MA,2116,42.346972,-71.076018
+SRV,,,srv,314.0,SRV,569 Columbus Ave,Boston,MA,2118,42.3409018,-71.0816593
+STK Boston,,,stk boston,321.0,STK Boston,222 Berkeley St.,Boston,MA,2116,42.3514077,-71.0730278
+Troquet on South,,,troquet on south,484.0,Troquet on South,107 South St ,Boston,MA,2111,42.3514698,-71.0574217
+Uni,,,uni,331.0,Uni,370 Commonwealth Ave,- Elliot Hotel Boston,MA,2215,42.348962,-71.088566
+Viale,,,viale,488.0,Viale,502 Mass Ave,Cambridge,MA,2139,42.098912,-70.994613
+Cosmica,,,cosmica,341.0,Cosmica,40 Berkeley St.,Boston,MA,2116,42.3458854,-71.070854
+The Beehive,,,the beehive,342.0,The Beehive,541 Tremont St,Boston,MA,2116,42.3443729,-71.0713814
+"Wilson Farm, Inc.",,,wilson farm inc,343.0,"Wilson Farm, Inc.",10 Pleasant Street,Lexington,MA,2421,42.427983,-71.2068223
+Zurito,,,zurito,393.0,Zurito,26 Charles Street,Boston,MA,2114,42.3567657,-71.0699689

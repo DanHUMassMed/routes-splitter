@@ -37,8 +37,8 @@ def migrate(master_file_path):
             "city": row.get("city"),
             "state": row.get("state"),
             "zip": str(row.get("zip", "")) if pd.notna(row.get("zip")) else None,
-            # Format for PostGIS POINT type
-            "location": f"POINT({row['lon']} {row['lat']})",
+            "lat":row['lat'],
+            "lon":row['lon']
         }
         records_to_insert.append(record)
 

@@ -14,7 +14,7 @@ class SupabaseStop(StopModel):
         item_to_insert = {
                 "route_id": new_route_id,
                 "customer_id": customer_id_val,
-                "order_id": order_id_val,
+                "sequence": ??,
                 "notes": stop_row.get("notes"),
             }
         """
