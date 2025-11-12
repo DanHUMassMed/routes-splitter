@@ -13,14 +13,14 @@ class VRPService():
     def __init__(self):
         pass
 
-    def _haversine_distance(self, lat1, lon1, lat2, lon2):
-        R = 6371  # km
-        lat1, lon1, lat2, lon2 = map(math.radians, [lat1, lon1, lat2, lon2])
-        dlat = lat2 - lat1
-        dlon = lon2 - lon1
-        a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
-        c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-        return int(R * c * 1000)  # return in meters as integer
+    # def _haversine_distance(self, lat1, lon1, lat2, lon2):
+    #     R = 6371  # km
+    #     lat1, lon1, lat2, lon2 = map(math.radians, [lat1, lon1, lat2, lon2])
+    #     dlat = lat2 - lat1
+    #     dlon = lon2 - lon1
+    #     a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
+    #     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    #     return int(R * c * 1000)  # return in meters as integer
 
 
     def _split_sweep(self,df: pd.DataFrame, k: int, depot: Tuple[float,float]) -> np.ndarray:
@@ -227,10 +227,22 @@ class VRPService():
         return transit_callback_index
 
 
+    def solve_vrp(self, split_mode, stops_table: pd.DataFrame, num_vehicles: int,
+                                depot_location: Tuple[float, float]) -> Tuple[np.ndarray, Dict[int, List[int]]]:
+        if split_mode=="OR-Tool":
+            return self.solve_vrp_or_tools(stops_table, num_vehicles, depot_location)
+        elif split_mode=="Sweep":
+            labels = self._split_sweep(stops_table, num_vehicles, depot_location)
+            vehicle_routes = self.build_vehicle_routes_from_labels(labels, stops_table, num_vehicles, depot_location)
+            return labels, vehicle_routes
+        else:
+            raise RuntimeError("Error on Solver type must be (OR-Tools or Sweep)")
+
+
     # ---------------------------------------------------------------------
     # Solve VRP with OR-Tools
     # ---------------------------------------------------------------------
-    def solve_vrp(self, stops_table: pd.DataFrame, num_vehicles: int,
+    def solve_vrp_or_tools(self, stops_table: pd.DataFrame, num_vehicles: int,
                                 depot_location: Tuple[float, float]) -> Tuple[np.ndarray, Dict[int, List[int]]]:
         """Solve multi-vehicle VRP with distance and capacity constraints, fallback to sweep+greedy."""
         num_stops = len(stops_table)

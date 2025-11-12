@@ -11,7 +11,7 @@ def render_route_form():
 
     st.header("2. Configure Routes")
     num_vehicles = st.selectbox("Number of Vehicles", options=list(range(1, 11)), index=3)
-    split_mode = st.selectbox("Route Assignment Algorithm", ("kmeans", "sweep"))
+    split_mode = st.selectbox("Route Assignment Algorithm", ("OR-Tool", "Sweep"))
     route_date = st.date_input("Route Date", value=st.session_state.get('route_date'), format="MM/DD/YYYY")
 
     st.header("3. Generate Routes")

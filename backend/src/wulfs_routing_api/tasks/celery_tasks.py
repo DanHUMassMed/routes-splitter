@@ -58,7 +58,7 @@ def generate_routing_task(self, orders_file_content_b64: str, num_vehicles: int,
 
         # 4. Assign routes using OR-Tools VRP solver
         self.update_state(state='PROGRESS', meta={'status':'RUNNING','message': 'Calculating routes with OR-Tools...'}) 
-        labels, routes = vrp_service.solve_vrp(stops_df, num_vehicles, (hq_lon, hq_lat))
+        labels, routes = vrp_service.solve_vrp(split_mode, stops_df, num_vehicles, (hq_lon, hq_lat))
         stops_df["vehicle_index"] = labels
 
         # 5. Save results to Supabase
