@@ -29,4 +29,5 @@ app_logs/
 gunicorn.pid
 
 **/routes_out_temp_map/
+**/OSRM/data/
 
