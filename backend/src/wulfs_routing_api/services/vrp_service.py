@@ -3,6 +3,7 @@ from typing import Dict, List, Tuple
 import numpy as np
 from ortools.constraint_solver import routing_enums_pb2
 from ortools.constraint_solver import pywrapcp
+from wulfs_routing_api.services.osrm_service import OSRMService
 import logging
 
 import pandas as pd
@@ -11,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 class VRPService():
     def __init__(self):
-        pass
+        self.osrm_service = OSRMService()
 
     def _split_sweep(self,df: pd.DataFrame, k: int, depot: Tuple[float,float]) -> np.ndarray:
         dlat, dlon = depot
@@ -125,11 +126,27 @@ class VRPService():
     # ---------------------------------------------------------------------
     # Compute full distance matrix including depot
     # ---------------------------------------------------------------------
-    def build_distance_matrix(self, stops_table: pd.DataFrame, depot_location: Tuple[float, float]) -> List[List[float]]:
+    def build_distance_matrix(self, stops_table: pd.DataFrame, depot_location: Tuple[float, float], distance_fn = None) -> List[List[float]]:
+        if distance_fn is None:
+            #distance_fn = self.compute_haversine_distance
+            distance_fn = self.osrm_service.get_route_distance
+
         """Build distance matrix in km including depot as index 0."""
         coords = [(row["lat"], row["lon"]) for _, row in stops_table.iterrows()]
         all_points = [depot_location] + coords
-        return [[self.compute_haversine_distance(a, b) for b in all_points] for a in all_points]
+        n = len(all_points)
+
+        # Initialize an n x n matrix of zeros
+        distance_matrix = [[0.0] * n for _ in range(n)]
+
+        # Compute only upper triangle and mirror to lower
+        for i in range(n):
+            for j in range(i + 1, n):
+                dist = distance_fn(all_points[i], all_points[j])
+                distance_matrix[i][j] = dist
+                distance_matrix[j][i] = dist  # mirror for symmetry
+
+        return distance_matrix
 
 
     # ---------------------------------------------------------------------
