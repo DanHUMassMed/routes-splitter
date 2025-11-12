@@ -13,16 +13,6 @@ class VRPService():
     def __init__(self):
         pass
 
-    # def _haversine_distance(self, lat1, lon1, lat2, lon2):
-    #     R = 6371  # km
-    #     lat1, lon1, lat2, lon2 = map(math.radians, [lat1, lon1, lat2, lon2])
-    #     dlat = lat2 - lat1
-    #     dlon = lon2 - lon1
-    #     a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
-    #     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-    #     return int(R * c * 1000)  # return in meters as integer
-
-
     def _split_sweep(self,df: pd.DataFrame, k: int, depot: Tuple[float,float]) -> np.ndarray:
         dlat, dlon = depot
         def angle(row):
@@ -91,15 +81,6 @@ class VRPService():
                 representing their route order (greedy nearest-neighbor from depot).
         """
 
-        def haversine(coord1: Tuple[float, float], coord2: Tuple[float, float]) -> float:
-            """Compute great-circle distance (km) between two (lat, lon) coordinates."""
-            R = 6371.0  # Earth radius in km
-            lat1, lon1 = map(math.radians, coord1)
-            lat2, lon2 = map(math.radians, coord2)
-            dlat, dlon = lat2 - lat1, lon2 - lon1
-            a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
-            return 2 * R * math.asin(math.sqrt(a))
-
         # Create lookup for coordinates
         coords_lookup = {
             idx: (row[lat_column], row[lon_column])
@@ -114,7 +95,7 @@ class VRPService():
             route = []
             current_coord = start_coord
             while unvisited:
-                nearest_stop = min(unvisited, key=lambda i: haversine(current_coord, coords_lookup[i]))
+                nearest_stop = min(unvisited, key=lambda i: self.compute_haversine_distance(current_coord, coords_lookup[i]))
                 route.append(nearest_stop)
                 unvisited.remove(nearest_stop)
                 current_coord = coords_lookup[nearest_stop]
