@@ -19,7 +19,7 @@ class SupabaseStop(StopModel):
             }
         """
         try:
-            logger.debug(f"Inserting route(s): {item_to_insert}")
+            logger.debug(f"Inserting stop(s): {item_to_insert}")
 
             response = supabase.table('stops').insert(item_to_insert).execute()
 
@@ -35,7 +35,7 @@ class SupabaseStop(StopModel):
                 return [] if isinstance(item_to_insert, list) else None
 
             # Successful insert
-            logger.info(f"Inserted {len(response.data)} route(s) successfully.")
+            logger.info(f"Inserted {len(response.data)} stop(s) successfully.")
 
             # If we sent a Dict we expect a Dict back
             if isinstance(item_to_insert, dict):
@@ -43,7 +43,26 @@ class SupabaseStop(StopModel):
             return response.data
 
         except Exception as e:
-            msg = f"Unexpected error during route insert: {e}"
+            msg = f"Unexpected error during stop insert: {e}"
+            logger.exception(msg)
+            raise RuntimeError(msg) from e
+
+    def get_stops_for_route(self, route_id):
+        try:
+            logger.error(f"Get Stops for Route: {route_id}")
+
+            response = supabase.table('stops').select('*, customers(*)').eq('route_id', route_id).execute()
+
+            if not response.data:
+                return []
+
+            # Successful get
+            logger.info(f"Selected {len(response.data)} stops(s) successfully.")
+
+            return response.data
+
+        except Exception as e:
+            msg = f"Unexpected error during select stops: {e}"
             logger.exception(msg)
             raise RuntimeError(msg) from e
 

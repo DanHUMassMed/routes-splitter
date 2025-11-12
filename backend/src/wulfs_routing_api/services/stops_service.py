@@ -34,3 +34,6 @@ class StopService():
         # Bulk insert all stops at once
         if stops_to_insert:
             self.model.create(stops_to_insert)
+
+    def get_stops_for_route(self, route_id):
+            return self.model.get_stops_for_route(route_id)

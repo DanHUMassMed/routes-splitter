@@ -34,7 +34,6 @@ def generate_route_map(df: pd.DataFrame, outdir: str, route_date: str, depot_coo
     else:
         for vehicle_index, seq in sequences.items():
             color = colors[vehicle_index % len(colors)]
-            
             route_points = [(depot_coords[1], depot_coords[0])]
             for original_df_index in seq:
                 if original_df_index != 0: # 0 is the depot

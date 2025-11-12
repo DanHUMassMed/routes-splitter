@@ -47,4 +47,24 @@ class SupabaseRoute(RouteModel):
             logger.exception(msg)
             raise RuntimeError(msg) from e
 
-        
+    def select_all_routes(self):
+        try:
+            logger.debug(f"Select all routes")
+
+            response = supabase.table('routes').select("*").order('created_at', desc=True).execute()
+
+            # Validate response
+            if not hasattr(response, "data") or response.data is None:
+                msg = f"Select returned no data. Response: {response}"
+                logger.error(msg)
+                raise RuntimeError(msg)
+
+            if not response.data:
+                return []
+
+            return response.data
+
+        except Exception as e:
+            msg = f"Unexpected error during select all routes: {e}"
+            logger.exception(msg)
+            raise RuntimeError(msg) from e

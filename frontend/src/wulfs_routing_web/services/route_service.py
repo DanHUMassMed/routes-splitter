@@ -21,11 +21,11 @@ def start_route_generation(orders_file, num_vehicles, split_mode, route_date, hq
 
 def get_job_status(job_id):
     """Gets the status of a running job."""
-    return api_get(f"routes/status/{job_id}")
+    return api_get(f"routes/{job_id}/status")
 
 def get_route_results(job_id):
     """Gets the results of a completed job."""
-    result_payload = api_get(f"routes/result/{job_id}")['result']
+    result_payload = api_get(f"routes/{job_id}/results")['result']
 
     if result_payload.get('status') == 'FAILURE':
         raise APIError(f"Route generation failed: {result_payload.get('error_message', 'Unknown error')}")
@@ -51,4 +51,4 @@ def get_historical_routes():
 
 def get_historical_route_details(route_id):
     """Gets the details for a specific historical route."""
-    return api_get(f"routes/{route_id}")
+    return api_get(f"routes/{route_id}/stops")

@@ -31,6 +31,9 @@ class RouteService():
 
         return created_map
     
+    def list_routes(self):
+        return self.model.select_all_routes()
+    
     def save_routes_map(self,df: pd.DataFrame, outdir: str, route_date: str, depot_coords: Tuple[float, float], sequences: dict):
         """Saves an HTML map of the routes. Note: The stops displayed are unsequenced; this map is for visualizing vehicle assignments, not optimized delivery order."""
         m = folium.Map(location=[depot_coords[1], depot_coords[0]], zoom_start=10)

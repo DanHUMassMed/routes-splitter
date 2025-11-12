@@ -40,7 +40,7 @@ def parse_point(point_data):
     return None, None
 
 def process_routes_from_api(route_stops_data):
-    """Transforms the API response from /routes/{route_id} into a DataFrame."""
+    """Transforms the API response from /routes/{route_id}/stops into a DataFrame."""
     records = []
     for stop in route_stops_data:
         customer_data = stop.get('customers', {})
@@ -55,6 +55,7 @@ def process_routes_from_api(route_stops_data):
             "zip": customer_data.get('zip'),
             "lat": lat,
             "lon": lon,
+            "sequence":stop.get('stop_sequence'),
             "notes": stop.get('notes'),
         })
     return pd.DataFrame(records)
