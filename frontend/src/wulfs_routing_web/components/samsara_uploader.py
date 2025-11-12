@@ -2,12 +2,13 @@ import streamlit as st
 import os
 import datetime as dt
 from ..services.samsara_service import upload_routes_to_samsara
+from ..utils.env_utils import get_env
 
 def render_samsara_uploader():
     """Renders the UI for uploading routes to Samsara."""
     st.header("5. Upload to Samsara")
 
-    samsara_token = os.getenv("SAMSARA_API_TOKEN")
+    samsara_token = get_env("SAMSARA_API_TOKEN")
     if not samsara_token:
         st.warning("SAMSARA_API_TOKEN environment variable not set. Cannot upload to Samsara.")
         return

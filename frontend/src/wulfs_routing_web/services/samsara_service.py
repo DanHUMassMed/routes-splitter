@@ -6,6 +6,8 @@ from typing import Optional
 
 from ..constants import SAMSARA_ROUTES_URL
 
+from ..utils.env_utils import get_env
+
 def _samsara_upload_unsequenced(vehicle_df: pd.DataFrame, token: str, route_name: str,
                                depot_lat: float, depot_lon: float, start_local: dt.datetime,
                                vehicle_id: Optional[str] = None):
@@ -56,7 +58,7 @@ def upload_routes_to_samsara(all_routes_df: pd.DataFrame, route_date: dt.date, r
     
     Yields: A success or error message for each vehicle.
     """
-    samsara_token = os.getenv("SAMSARA_API_TOKEN")
+    samsara_token = get_env("SAMSARA_API_TOKEN")
     if not samsara_token:
         raise ValueError("SAMSARA_API_TOKEN environment variable not set.")
 
