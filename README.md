@@ -43,7 +43,7 @@ cd routes-splitter
 python -m venv .venv
 source ./venev/bin/activate
 
-pip install -r ../requirements.txt
+pip install -r ./requirements.txt
 
 # Create a .env file
 # and add your Supabase credentials:

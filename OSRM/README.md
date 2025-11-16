@@ -2,10 +2,11 @@
 - download map data from https://download.geofabrik.de
    - wget https://download.geofabrik.de/north-america/us/massachusetts-latest.osm.pbf
 ### Unpack the map data
+```bash
 docker run -t -v ./data:/data osrm/osrm-backend osrm-extract -p /opt/car.lua /data/massachusetts-latest.osm.pbf
 docker run -t -v "./data:/data" osrm/osrm-backend osrm-partition /data/massachusetts-latest.osm.pbf
 docker run -t -v "./data:/data" osrm/osrm-backend osrm-customize /data/massachusetts-latest.osm.pbf
-
+```
 ### Run the server
 docker run  -dt -p 5001:5000 -v ./data:/data osrm/osrm-backend osrm-routed --algorithm mld /data/massachusetts-latest.osm.pbf
 

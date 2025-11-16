@@ -16,6 +16,8 @@ freeze.txt
 **/.env
 **/.env.*
 
+.venv/
+
 **/redis/redis-stable/
 frontend/public/dynamic/
 frontend/build/
